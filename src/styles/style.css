@@ -1,0 +1,142 @@
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: Helvetice, Arial, sans-serif;
+  background: #333745;
+  font-size: 1.6rem; }
+
+button {
+  cursor: pointer; }
+
+button:disabled {
+  cursor: default; }
+
+.container {
+  max-width: 60em;
+  margin: 0 auto;
+  padding: 0 1.6rem; }
+
+.header {
+  background: #20222b;
+  color: white;
+  margin-bottom: 4.8rem;
+  padding: 1.6rem; }
+
+.header__title {
+  margin: 0em;
+  font-size: 3.1rem; }
+
+.header__subtitle {
+  color: #a5afd7;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: 0em; }
+
+.big-button {
+  background: #8375c5;
+  border: none;
+  border-bottom: 0.6rem solid #6351b6;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font-size: 3.1rem;
+  padding: 2.4rem;
+  margin-bottom: 4.8rem; }
+
+.big-button:disabled {
+  opacity: .5; }
+
+.button {
+  border: none;
+  background: #8375c5;
+  color: white;
+  border-bottom: 0.3rem solid #6351b6;
+  font-weight: 500;
+  padding: 1rem; }
+
+.button--link {
+  background: none;
+  border: none;
+  color: #a5afd7;
+  padding: 0; }
+
+.option {
+  margin: 0em;
+  border-bottom: 1px solid #5c627b;
+  padding: 3.1rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  word-break: break-all; }
+
+.widget-header {
+  background: #3c4251;
+  color: #a5afd7;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.6rem; }
+
+.widget {
+  background: #464b5e;
+  margin-bottom: 4.8rem; }
+
+.widget-header__title {
+  margin: 0; }
+
+.widget-message {
+  margin: 0;
+  color: #a5afd7;
+  padding: 3.1rem;
+  text-align: center;
+  border-bottom: 1px solid #5c627b; }
+
+.option-error-message {
+  color: #a5afd7;
+  font-style: italic;
+  margin: 1rem 0 0 0;
+  padding: 0 1.6rem; }
+
+.add-option {
+  display: flex;
+  padding: 1.6rem; }
+
+.add-option-input {
+  flex-grow: 1;
+  background: #333745;
+  border: none;
+  border-bottom: 0.3rem solid #1d2028;
+  color: #a5afd7;
+  padding: 1rem;
+  margin-right: 1rem; }
+
+.ReactModalPortal .ReactModal__Overlay {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  transition: opacity 200ms ease-in-out; }
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1; }
+
+.ReactModalPortal .ReactModal__Overlay--before-colse {
+  opacity: 0; }
+
+.modal {
+  background: #464b5e;
+  color: white;
+  max-width: 30rem;
+  outline: none;
+  padding: 3.1rem;
+  text-align: center; }
+
+.modal__title {
+  margin: 0 0 1rem 0; }
+
+.modal__body {
+  margin: 0 0 3.1rem 0;
+  font-size: 2rem;
+  font-weight: 300;
+  word-break: break-all; }
+
+/*# sourceMappingURL=style.css.map */
