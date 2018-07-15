@@ -1,63 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BrowserRouter, Route, Switch, Link, NavLink} from "react-router-dom";
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
+import {addExpense} from "./actions/expenses";
+import {setTextFilter} from "./actions/filters";
+import getVisibleExpenses from "./selectors/expenses"
+
 import "normalize.css/normalize.css"
 import './styles/style.scss';
+import AppRouter from "./routers/AppRouter"
 
-const ExpenseDashboardPage = () => (
-    <div>
-        this page is from expense dash board
-    </div>
-);
+const store = configureStore();
 
-const AddExpensePage = () => (
-    <div>
-        this is a add expense page
-    </div>
-);
+const expenseOne = store.dispatch(addExpense({amount: 100, description: 'Rent Bill', createdAt: 1000}))
+const expensetwo = store.dispatch(addExpense({amount: 300, description: 'water Bill', createdAt: 2000}))
 
-const EditExpensePage = () => (
-    <div>
-        this is edit page
-    </div>
-);
-
-const HelpPage = () => (
-    <div>
-        This is help page
-    </div>
-);
-
-const NotFoundPage = () => (
-    <div>
-        404! <Link to="/">Go Home</Link>
-    </div>
-);
-
-const Header = () => (
-    <header>
-        <h1>Expensify</h1>
-        <NavLink to="/" activeClassName="is-active" exact={true}>Dashboard</NavLink>
-        <NavLink to="/create" activeClassName="is-active">Add Expense</NavLink>
-        <NavLink to="/edit" activeClassName="is-active">Edit Expense</NavLink>
-        <NavLink to="/help" activeClassName="is-active">Help</NavLink>
-    </header>
-)
+store.dispatch(setTextFilter('water'));
+store.subscribe((state)=>console.log(state));
+const state= store.getState();
+console.log(getVisibleExpenses(state.expenses, state.filters));
+const jsx = (
+    <Provider store={store}>
+        <AppRouter />
+    </Provider>
+    );
 
 
-const routes = (
-    <BrowserRouter>
-        <div>
-            <Header/>
-            <Switch>
-                <Route path="/" component={ExpenseDashboardPage} exact={true}/>
-                <Route path="/create" component={AddExpensePage}/>
-                <Route path="/edit" component={EditExpensePage}/>
-                <Route path="/help" component={HelpPage}/>
-                <Route component={NotFoundPage}/>
-            </Switch>
-        </div>
-    </BrowserRouter>
-)
-
-ReactDOM.render(routes, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));

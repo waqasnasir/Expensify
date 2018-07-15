@@ -1,0 +1,130 @@
+if (!window.ExampleListPerson) {
+	window.ExampleListPerson = function(data) {
+		data = data ? data : {};
+		this.name = data.name ? data.name : null;
+		this.template = data.template ? data.template : null;
+		this.serialize = function() {
+			var obj = {
+				name: this.name,
+				template: this.template
+			};
+			return obj;
+		};
+	};
+}
+
+PluginWrapper.registerPlugin('Kyvio-form', {
+	name: 'Optin Form Plugin',
+	element: {
+		minSize: {width: 500, height: 100},
+		defaultSize: {width: 500, height: 100},
+		resizable: true,
+	},
+
+	propertyDialog: {
+		tabs: [
+			{name: 'Kyvio Forms', children: [
+				{type: 'HorizontalLayout', columnWeights: [4, 6], children: [
+					{type: 'List', id: 'list',
+						// height of inner list element (list of items)
+						listHeight: 260,
+						// height of outer list element (grey block)
+						css: {height: 300},
+						// enable opportunity to add and delete items
+						editable: false,
+						// disable opportunity to change items order
+						sortable: false,
+						// 'itemType' is required. It has to be defined above and must contain method "serialize"
+						itemType: window.ExampleListPerson,
+						// triggered when item is selected in the list
+						select: function(fields, item) {
+							// propagate text fields with selected item
+							fields.formThumbnail._elem[0].innerHTML=item.template
+						//	fields.age.setValue(item.age);
+						},
+						// triggered when item is added in the list
+						add: function(fields, item, li) {
+							if (!fields.initialAdd) {
+								fields.list.selectItemLi($(li));
+							}
+						}
+					},
+					{type: 'VerticalLayout', children: [
+						{type: 'CustomContainer', id: 'formThumbnail', width:100}
+					]}
+				]},
+			]},
+			{name: 'Integrations', children: [
+				{type: 'VerticalLayout', columnWeights: [4, 8], children: [
+					{type: 'HorizontalLayout', columnWeights: [6, 6], css: {marginTop: 15}, children: [
+						{type: 'VerticalLayout', children: [
+							{type: 'Label', text: 'Key', helpText: 'Your message here'},
+							{type: 'TextField', id: 'key'}
+						]},
+						{type: 'VerticalLayout', children: [
+							{type: 'Label', text: 'Password', helpText: 'Your password provided by payment system'},
+							{type: 'TextField', id: 'password'}
+						]},
+
+
+					]}
+				]},
+			]},
+			{name: 'HTML Forms', children: [
+				{type: 'VerticalLayout', columnWeights: [4, 8], children: [
+					{type: 'HorizontalLayout', columnWeights: [6, 6], css: {marginTop: 15}, children: [
+						{type: 'VerticalLayout', children: [
+							{type: 'Label', text: 'Key', helpText: 'Your message here'},
+							{type: 'TextField', id: 'key'}
+						]},
+						{type: 'VerticalLayout', children: [
+							{type: 'Label', text: 'Password', helpText: 'Your password provided by payment system'},
+							{type: 'TextField', id: 'password'}
+						]},
+
+
+					]}
+				]},
+			]}
+		]
+	},
+
+	openAction: function(fields, data, elem) {
+		var obj, li;
+		fields.list.removeAllItems();
+		fields.initialAdd = true; // we do not need function "add" triggered on initial list generation
+		for (var i in data.content.list) {
+			obj = new window.ExampleListPerson(data.content.list[i]);
+			fields.list.addItem(obj);
+		}
+		fields.initialAdd = false;
+		fields.list.selectFirst();
+	},
+
+	applyAction: function(fields, data, elem) {
+		data.content.key= fields.key.getText();
+		//elem[0].innerHTML="<h2>this is head</h2>";
+		var last = fields.list.getLastSelected();
+			elem[0].innerHTML=last.template;
+			data.message=last.template
+			console.log(data.message)
+			data.template=last.template
+
+
+
+	},
+	loadAction: function(data) {
+	    var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://main.kyvio.com/api/v1/optinform", false);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + 'a4a621f025aeea25dffef4bef5df2be413222f1d047cb610fd4840b6d375f7e8'); //in prod, you should encrypt user name and password and provide encrypted keys here instead
+
+        xhr.send();
+        console.log(xhr);
+        var response=JSON.parse(xhr.responseText)
+        console.log(xhr.statusText);
+        console.log(response);
+
+		data.content.list = response.payload;
+		data.content.emptyList = (!data.content.list.length);
+	}
+});
