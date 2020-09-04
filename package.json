@@ -19,7 +19,7 @@
     "css-loader": "^0.28.11",
     "live-server": "^1.2.0",
     "moment": "^2.22.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",
     "react-dates": "^17.0.0",
